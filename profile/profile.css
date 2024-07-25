@@ -1,0 +1,357 @@
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
+
+/* Root variables for colors */
+:root {
+    --clr: #58bc82;
+    --primary-color: #333;
+    --secondary-color: #777;
+    --background-color: #f0f0f0;
+    --card-background: #ffffff;
+    --button-background: #e0e0e0;
+    --button-hover: #d0d0d0;
+    --navbar-background: #b1aeae;
+    --navbar-icon-color: #777;
+    --active-icon-color: #333;
+    --success-color: green;
+    --error-color: red;
+}
+
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "JetBrains Mono", monospace;
+}
+
+/* Style for the body */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+/* Container for profile */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Allows the container to take up available space */
+    padding: 20px; /* Add padding to ensure content doesn't touch the edges */
+}
+
+/* Header style */
+header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+header h1 {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+/* Profile card styles */
+.profile-card {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%; /* Ensure card takes up full width within container */
+    max-width: 400px; /* Restrict max width of the card */
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+.verified {
+    color: green;
+  }
+  .not-verified {
+    color: red;
+  }
+  .hidden {
+    display: none;
+  }
+  
+  .verified {
+    color: green;
+  }
+  .not-verified {
+    color: red;
+  }
+  .hidden {
+    display: none;
+  }
+
+  /* Popup Styles */
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .overlay:target {
+    visibility: visible;
+    opacity: 1;
+  }
+  .popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 50%;
+    position: relative;
+    transition: all 2s ease-in-out;
+  }
+  .popup-btn,.popup-btn a{
+    text-decoration: none;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  .popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+  .selectable-image {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  .selectable-image:hover {
+    border: 2px solid #007bff;
+  }
+.display-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.email {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+/* Username input and update button styles */
+#new-username,
+#current-password,
+#new-password {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#update-username {
+    background-color: var(--button-background);
+    color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#update-username:hover {
+    background-color: var(--clr);
+}
+
+.hidden {
+    display: none;
+}
+
+.update-username-section, .change-password-section, #reauthenticate-container {
+    margin: 10px 0;
+}
+
+#username-status, #password-status {
+    display: block;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* Account settings button styles */
+.account-settings {
+    margin-bottom: 20px;
+}
+
+.setting-option {
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-background);
+    color: var(--primary-color);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--clr);
+}
+
+/* Log out button styles */
+.logout {
+    background-color: #ff4444;
+    color: #fff;
+}
+
+.logout:hover {
+    background-color: #cc0000;
+}
+
+/* Bottom navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    margin: 0 auto;
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    left: 0;
+    right: 0;
+}
+
+.navbar .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: transparent; /* Default background */
+}
+
+.navbar .icon-button.active {
+    background-color: var(--clr); /* Green background for active state */
+}
+
+.navbar .icon-button img {
+    width: 24px;
+    height: 24px;
+}
+
+
+
+.navbar .settings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.4s ease; 
+}
+
+.navbar .settings.rotate {
+    transform: rotate(120deg); 
+}
+
+
+
+/* Make the navbar responsive */
+@media (max-width: 500px) {
+    .navbar {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .navbar .icon-button {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+.gender-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .toggle-container span {
+    margin: 0 10px;
+  }
+  
+  .toggle-container input {
+    appearance: none;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    outline: none;
+    transition: background-color 0.2s;
+  }
+  
+  .toggle-container input:before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.2s;
+  }
+  
+  .toggle-container input:checked {
+    background-color: #4caf50;
+  }
+  
+  .toggle-container input:checked:before {
+    transform: translateX(20px);
+  }
+  

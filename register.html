@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <link rel="stylesheet" href="style-signup.css" />
+  </head>
+  <body>
+    <div id="error-box" style="display:none; padding: 10px; background-color: red; color: white; position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
+    <div id="success-box" style="display:none; padding: 10px; background-color: rgb(67, 231, 16); color: white; position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
+    
+    <div class="container">
+      <form class="form">
+        <span class="input-span">
+          <label for="email" class="label">Email</label>
+          <input type="email" name="email" id="email" />
+        </span>
+        <span class="input-span">
+          <label for="username" class="label">Username</label>
+          <input type="text" name="username" id="username" />
+        </span>
+        <span class="input-span">
+          <label for="password" class="label">Password</label>
+          <input type="password" name="password" id="password" />
+        </span>
+        <input class="submit" type="submit" value="Sign Up" id="signin" />
+        
+        <button class="google-login-button" id="google-signin">
+          <img src="assests/google.svg" alt="google-icon" class="google-icon">
+          Sign up with Google
+        </button>
+        
+        <span class="span">Already have an account? <a href="index.html">Login</a></span>
+      </form>
+    </div>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

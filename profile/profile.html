@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css" />
+    
+</head>
+<body>
+    <div class="container">
+      <header>
+        <h1>Profile</h1>
+      </header>
+      <div class="profile-card">
+        <div class="profile-image-container">
+          <div class="circle" id="circle">
+            <img
+              id="profile-image"
+              src="../assests/user-svgrepo-com.svg"
+              alt="User Image"
+              class="profile-image"
+            />
+          </div>
+        </div>
+        <h2 id="username" class="display-name">[Display Name]</h2>
+        <p class="email">[Email]</p>
+        <p>
+          Status:
+          <span id="verification-status" class="not-verified">✘ Not Verified</span>
+        </p>
+        <div id="error-box" style="display: none; padding: 10px; background-color: red; color: white; position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
+        <div id="success-box" style="display: none; padding: 10px; background-color: rgb(67, 231, 16); color: white; position: fixed; top: 20px; right: 20px; z-index: 1000;"></div>
+
+        <!-- Button to open popup -->
+         
+        <div class="gender-toggle">
+          <div class="toggle-container">
+            <span>Male</span>
+            <input type="checkbox" id="gender-switch">
+            <span>Female</span>
+          </div>
+        </div>
+        <!-- Popup container -->
+        <div id="popup1" class="overlay">
+          <div class="popup">
+            <h2>Select an Image</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content">
+              <!-- Image options -->
+              <img src="../assests/profile-img/iam.jpg" alt="Image 1" class="selectable-image" data-url="../assests/profile-img/iam.jpg" />
+              <img src="../assests/profile-img/iam.jpg" alt="Image 2" class="selectable-image" data-url="../assests/profile-img/iam.jpg" />
+              <img src="../assests/google.svg" alt="Image 3" class="selectable-image" data-url="image3.jpg" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Update Username Section -->
+        <div class="update-username-section hidden">
+          <button class="popup-btn">
+            <a class="button" href="#popup1">Change profile Image</a>
+           </button>
+          <button id="show-username-input" type="button">Update Username</button>
+          <input type="text" id="new-username" placeholder="New username" class="hidden" />
+          <button id="update-username" type="button" class="hidden">Save Username</button>
+          <span id="username-status"></span>
+        </div>
+
+        <!-- Change Password Section -->
+        <div class="change-password-section hidden">
+          <button id="show-password-input" type="button">Change Password</button>
+          <input type="password" id="new-password" placeholder="New password" class="hidden" />
+          <button id="change-password" type="button" class="hidden">Save Password</button>
+          <span id="password-status"></span>
+        </div>
+
+        <!-- Re-authenticate Section -->
+        <div id="reauthenticate-container" class="hidden">
+          <input type="password" id="current-password" placeholder="Current password" />
+          <button id="reauthenticate" type="button">Re-authenticate</button>
+        </div>
+
+
+        <div class="account-settings">
+          <div class="setting-option">
+            <button id="edit-profile-button" class="edit-profile">Edit Profile</button>
+          </div>
+        </div>
+        <button class="logout">Log Out</button>
+      </div>
+      <div class="navbar">
+        <div class="icon-button">
+          <a href="../home/home.html">
+            <img src="../assests/home.png" alt="Home" />
+          </a>
+        </div>
+        <div class="icon-button">
+          <a href="../Files/files.html">
+            <img src="../assests/hard-drive.png" alt="Files" />
+          </a>
+        </div>
+        <div class="icon-button active">
+          <a href="../home/home.html" id="settings-button" class="settings">
+            <img src="../assests/settings.png" alt="Settings" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="profile.js"></script>
+</body>
+</html>

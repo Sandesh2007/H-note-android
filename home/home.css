@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
+
+:root {
+    --clr: #58bc82;
+    --primary-color: #333;
+    --secondary-color: #777;
+    --background-color: #f0f0f0;
+    --card-background: #ffffff;
+    --button-background: #e0e0e0;
+    --button-hover: #d0d0d0;
+    --navbar-background: #b1aeae;
+    --navbar-icon-color: #777;
+    --active-icon-color: #333;
+    --success-color: green;
+    --error-color: red;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "JetBrains Mono", monospace;
+}
+body{
+    background-color: gray;
+    text-align: center;
+    margin-top: 50%;
+    transition: scale infinite ease;
+}
+
+/* Bottom navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    margin: 0 auto;
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    left: 0;
+    right: 0;
+}
+
+.navbar .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: transparent; /* Default background */
+}
+
+.navbar .icon-button.active {
+    background-color: var(--clr); /* Green background for active state */
+}
+
+.navbar .icon-button img {
+    width: 24px;
+    height: 24px;
+}
+
+
+
+.navbar .settings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.4s ease; 
+}
+
+.navbar .settings.rotate {
+    transform: rotate(120deg); 
+}
+
+
+
+/* Make the navbar responsive */
+@media (max-width: 500px) {
+    .navbar {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .navbar .icon-button {
+        width: 40px;
+        height: 40px;
+    }
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <form class="form" id="login-form">
+        <span class="input-span">
+          <label for="email" class="label">Email</label>
+          <input type="email" name="email" id="email" />
+        </span>
+        <span class="input-span">
+          <label for="password" class="label">Password</label>
+          <input type="password" name="password" id="password" />
+        </span>
+        <span class="span"><a href="#">Forgot password?</a></span>
+        <input class="submit" type="submit" value="Login" id="login" />
+        <button class="google-login-button" id="google-signin">
+          <img src="assests/google.svg" alt="google-icon" class="google-icon">
+          Sign In with Google
+        </button>
+        <span class="span">Don't have an account? <a href="register.html">Sign up</a></span>
+      </form>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDXsOAriTKI7xQ79CemiNqZqZm8_ecBkpc",
+        authDomain: "h-note-app.firebaseapp.com",
+        databaseURL: "https://h-note-app-default-rtdb.firebaseio.com",
+        projectId: "h-note-app",
+        storageBucket: "h-note-app.appspot.com",
+        messagingSenderId: "319394919884",
+        appId: "1:319394919884:web:37be18cf2d8eba36e79969",
+        measurementId: "G-GLQ9R1GH0C",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+
+      // Handle form submission for email/password login
+      document.getElementById("login-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            alert('User logged in');
+            window.location.href = 'profile/profile.html';
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+      });
+
+      // Handle Google Sign-In
+      document.getElementById("google-signin").addEventListener("click", (e) => {
+        e.preventDefault();
+        const provider = new GoogleAuthProvider();
+
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+            alert('Google Sign-In successful');
+            window.location.href = 'profile/profile.html';
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+      });
+    </script>
+  </body>
+</html>
