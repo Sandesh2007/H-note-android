@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
 
+/* Root variables for colors */
 :root {
     --clr: #58bc82;
     --primary-color: #333;
@@ -15,12 +16,45 @@
     --error-color: red;
 }
 
+/* Reset default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "JetBrains Mono", monospace;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --clr: #58bc82;
+        --primary-color: #f0f0f0;
+        --secondary-color: #bbb;
+        --background-color: #333;
+        --card-background: #444;
+        --button-background: #555;
+        --button-hover: #666;
+        --navbar-background: #444;
+        --navbar-icon-color: #c7bfbf;
+        --active-icon-color: #fff;
+        --success-color: #58bc82;
+        --error-color: #ff4444;
+        background-color: var(--navbar-background);
+    color: var(--card-background);
+    .container{
+        background-color: var(--background-color);
+    }
+    .message{
+        background-color: var(--button-background);
+        color: var(--primary-color);
+    }
+    .navbar i{
+      color: white;
+      font-size: larger;
+      text-decoration: none;
+    }
+    }
+}
+
 body{
     background-color: gray;
 }
@@ -50,7 +84,7 @@ body{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--card-background);
     padding: 10px;
     border-radius: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -76,16 +110,20 @@ body{
 }
 
 .navbar .icon-button.active {
-    background-color: var(--clr); /* Green background for active state */
+    background-color: var(--clr);
 }
 
-.navbar .icon-button img {
+/* .navbar .icon-button img {
     width: 24px;
     height: 24px;
-}
+} */
 
 
-
+.navbar a i{
+    color: var(--navbar-icon-color);
+    font-size: larger;
+    text-decoration: none;
+  }
 .navbar .settings {
     display: flex;
     align-items: center;

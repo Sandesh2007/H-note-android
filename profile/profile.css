@@ -25,6 +25,30 @@
     font-family: "JetBrains Mono", monospace;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --clr: #58bc82;
+        --primary-color: #f0f0f0;
+        --secondary-color: #bbb;
+        --background-color: #333;
+        --card-background: #444;
+        --button-background: #555;
+        --button-hover: #666;
+        --navbar-background: #444;
+        --navbar-icon-color: #c7bfbf;
+        --active-icon-color: #fff;
+        --success-color: #58bc82;
+        --error-color: #ff4444;
+        background-color: var(--card-background);
+    color: var(--card-background);
+    .navbar i{
+      color: white;
+      font-size: larger;
+      text-decoration: none;
+    }
+    }
+}
+
 /* Style for the body */
 body {
     display: flex;
@@ -56,6 +80,7 @@ header h1 {
 
 /* Profile card styles */
 .profile-card {
+  color: var(--primary-color);
     background-color: var(--card-background);
     border-radius: 10px;
     padding: 20px;
@@ -239,7 +264,7 @@ button:hover {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--card-background);
     padding: 10px;
     border-radius: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -273,7 +298,11 @@ button:hover {
     height: 24px;
 }
 
-
+.navbar i{
+  color: var(--navbar-icon-color);
+  font-size: larger;
+  text-decoration: none;
+}
 
 .navbar .settings {
     display: flex;
@@ -290,7 +319,9 @@ button:hover {
 .navbar .settings.rotate {
     transform: rotate(120deg); 
 }
-
+.navbar a{
+  text-decoration: none;
+}
 
 
 /* Make the navbar responsive */
