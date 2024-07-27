@@ -125,56 +125,65 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Update username in Firebase
-            updateUsernameButton.addEventListener("click", async () => {
-                const newUsername = newUsernameInput.value.trim();
-                if (newUsername) {
-                    const usernameRef = ref(database, 'users/');
-                    try {
-                        const snapshot = await get(usernameRef);
-                        let isUsernameAvailable = true;
-                        snapshot.forEach((childSnapshot) => {
-                            if (childSnapshot.val().username === newUsername && childSnapshot.key !== user.uid) {
-                                isUsernameAvailable = false;
-                            }
-                        });
+            let userRef;
 
-                        if (isUsernameAvailable) {
-                            await update(userRef, { username: newUsername });
-                            usernameElement.textContent = newUsername;
-                            usernameStatus.textContent = 'Username updated successfully!';
-                            usernameStatus.style.color = 'green';
-                            // Update the cached profile data
-                            localStorage.setItem('userProfile', JSON.stringify({
-                                name: newUsername,
-                                image: cachedProfile ? cachedProfile.image : 'user.svg'
-                            }));
-                            setTimeout(() => {
-                                usernameStatus.textContent = '';
-                            }, 2000);
-                        } else {
-                            usernameStatus.textContent = 'Username is already taken.';
-                            usernameStatus.style.color = 'red';
-                            setTimeout(() => {
-                                usernameStatus.textContent = '';
-                            }, 2000);
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        userRef = ref(database, 'users/' + user.uid);
+        
+        // Update username
+        updateUsernameButton.addEventListener("click", async () => {
+            const newUsername = newUsernameInput.value.trim();
+            if (newUsername) {
+                try {
+                    const usernameRef = ref(database, 'users/');
+                    const snapshot = await get(usernameRef);
+                    let isUsernameAvailable = true;
+                    snapshot.forEach((childSnapshot) => {
+                        if (childSnapshot.val().username === newUsername && childSnapshot.key !== user.uid) {
+                            isUsernameAvailable = false;
                         }
-                    } catch (error) {
-                        showError("Error updating username: " + error.message);
-                        usernameStatus.textContent = 'Error updating username.';
+                    });
+
+                    if (isUsernameAvailable) {
+                        await update(userRef, { username: newUsername });
+                        usernameElement.textContent = newUsername;
+                        usernameStatus.textContent = 'Username updated successfully!';
+                        usernameStatus.style.color = 'green';
+                        localStorage.setItem('userProfile', JSON.stringify({
+                            name: newUsername,
+                            image: cachedProfile ? cachedProfile.image : 'user.svg'
+                        }));
+                        setTimeout(() => {
+                            usernameStatus.textContent = '';
+                        }, 2000);
+                    } else {
+                        usernameStatus.textContent = 'Username is already taken.';
                         usernameStatus.style.color = 'red';
                         setTimeout(() => {
                             usernameStatus.textContent = '';
                         }, 2000);
                     }
-                } else {
-                    showError('Please enter a username.');
-                    usernameStatus.textContent = 'Please enter a username.';
+                } catch (error) {
+                    showError("Error updating username: " + error.message);
+                    usernameStatus.textContent = 'Error updating username.';
                     usernameStatus.style.color = 'red';
                     setTimeout(() => {
                         usernameStatus.textContent = '';
                     }, 2000);
                 }
-            });
+            } else {
+                showError('Please enter a username.');
+                usernameStatus.textContent = 'Please enter a username.';
+                usernameStatus.style.color = 'red';
+                setTimeout(() => {
+                    usernameStatus.textContent = '';
+                }, 2000);
+            }
+        });
+    }
+});
+
 
             // Re-authenticate user
             reauthenticateButton.addEventListener("click", async () => {
@@ -351,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     function updateDisplayNameWithGender(username, gender) {
-      let symbol = "";
+      let symbol = "♂️";
       if (gender === "male") {
         symbol = " ♂️";
       } else if (gender === "female") {
