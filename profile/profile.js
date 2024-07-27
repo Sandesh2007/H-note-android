@@ -24,7 +24,7 @@ function showError(message) {
     errorBox.style.display = "block";
     setTimeout(() => {
         errorBox.style.display = "none";
-    }, 3000); // Hide the error box after 3 seconds
+    }, 3000);
 }
 
 function showSuccess(message) {
@@ -33,7 +33,7 @@ function showSuccess(message) {
     successBox.style.display = "block";
     setTimeout(() => {
         successBox.style.display = "none";
-    }, 3000); // Hide the success box after 3 seconds
+    }, 3000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -124,9 +124,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            function updateDisplayNameWithGender(username, gender) {
+                let symbol = "♂️";
+                if (gender === "female") {
+                    symbol = "♀️";
+                }
+                usernameElement.textContent = username + " " + symbol;
+            }
+
             // Update username in Firebase
             let userRef;
 
+// Update username in Firebase
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         userRef = ref(database, 'users/' + user.uid);
@@ -147,13 +156,16 @@ onAuthStateChanged(auth, async (user) => {
 
                     if (isUsernameAvailable) {
                         await update(userRef, { username: newUsername });
-                        usernameElement.textContent = newUsername;
+
+                        // Fetch updated gender and username
+                        const updatedSnapshot = await get(userRef);
+                        if (updatedSnapshot.exists()) {
+                            const userData = updatedSnapshot.val();
+                            updateDisplayNameWithGender(newUsername, userData.gender);
+                        }
+
                         usernameStatus.textContent = 'Username updated successfully!';
                         usernameStatus.style.color = 'green';
-                        localStorage.setItem('userProfile', JSON.stringify({
-                            name: newUsername,
-                            image: cachedProfile ? cachedProfile.image : 'user.svg'
-                        }));
                         setTimeout(() => {
                             usernameStatus.textContent = '';
                         }, 2000);
@@ -183,7 +195,6 @@ onAuthStateChanged(auth, async (user) => {
         });
     }
 });
-
 
             // Re-authenticate user
             reauthenticateButton.addEventListener("click", async () => {
