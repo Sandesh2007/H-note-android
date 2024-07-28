@@ -84,6 +84,7 @@ body{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    text-decoration: none ;
     background-color: var(--card-background);
     padding: 10px;
     border-radius: 25px;
@@ -122,12 +123,13 @@ body{
 .navbar a i{
     color: var(--navbar-icon-color);
     font-size: larger;
-    text-decoration: none;
+    text-decoration: none ;
   }
 .navbar .settings {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
     flex-direction: column;
     width: 50px;
     height: 50px;

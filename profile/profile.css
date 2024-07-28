@@ -41,6 +41,9 @@
         --error-color: #ff4444;
         background-color: var(--card-background);
     color: var(--card-background);
+    .popup{
+      background-color: var(--card-background);
+    }
     .navbar i{
       color: white;
       font-size: larger;
@@ -133,9 +136,10 @@ header h1 {
     opacity: 1;
   }
   .popup {
+    height: 500px;
     margin: 70px auto;
     padding: 20px;
-    background: #fff;
+    background: var(--background-color);
     border-radius: 5px;
     width: 50%;
     position: relative;
@@ -154,21 +158,22 @@ header h1 {
     font-size: 30px;
     font-weight: bold;
     text-decoration: none;
-    color: #333;
+    color: var(--primary-color);
   }
   .popup .content {
-    max-height: 30%;
-    overflow: auto;
+    max-height: 95%;
+    overflow:auto;
   }
   .selectable-image {
+    border-radius: 16px;
     width: 100px;
     height: 100px;
     margin: 10px;
     cursor: pointer;
-    border: 2px solid transparent;
+    border: 2px solid white;
   }
   .selectable-image:hover {
-    border: 2px solid #007bff;
+    border: 2px solid var(--clr);
   }
 .display-name {
     font-size: 20px;
@@ -326,6 +331,10 @@ button:hover {
 
 /* Make the navbar responsive */
 @media (max-width: 500px) {
+  .popup {
+    width: auto;
+
+  }
     .navbar {
         width: 100%;
         padding: 10px 20px;
