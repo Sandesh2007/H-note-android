@@ -1,8 +1,0 @@
-[
-  {
-    "origin": ["https://sandesh2007.github.io/"],  // Replace with your domain
-    "method": ["GET", "POST"],
-    "maxAgeSeconds": 3600
-  }
-]
-
