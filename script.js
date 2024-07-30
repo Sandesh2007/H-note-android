@@ -80,7 +80,7 @@ document.getElementById('google-signin').addEventListener('click', async (e) => 
 
   const auth = getAuth();
   try {
-    const result = await signInWithPopup(auth, provider,{prompt:'consent'});
+    const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
     // Save user data in the database
