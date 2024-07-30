@@ -1,0 +1,8 @@
+[
+  {
+    "origin": ["https://sandesh2007.github.io/"],  
+    "method": ["GET", "POST"],
+    "maxAgeSeconds": 3600
+  }
+]
+

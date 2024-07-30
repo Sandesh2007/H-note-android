@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
 import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDXsOAriTKI7xQ79CemiNqZqZm8_ecBkpc",
@@ -15,8 +15,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
+const auth = getAuth(); // Initialize auth only once
+const provider = new GoogleAuthProvider(); // Initialize provider only once
 
 document.getElementById('signin').addEventListener('click', async (e) => {
   e.preventDefault();
@@ -65,9 +65,7 @@ document.getElementById('signin').addEventListener('click', async (e) => {
         });
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        showError(errorMessage);
+        showError(error.message);
       });
 
   } catch (error) {
@@ -78,45 +76,96 @@ document.getElementById('signin').addEventListener('click', async (e) => {
 document.getElementById('google-signin').addEventListener('click', async (e) => {
   e.preventDefault();
 
-  const auth = getAuth();
   try {
     const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+    if (result.user) {
+      const user = result.user;
 
-    // Save user data in the database
-    const username = user.displayName || user.email.split('@')[0];
-    const email = user.email;
+      // Save user data in the database
+      let username = user.displayName || user.email.split('@')[0];
+      const email = user.email;
 
-    // Check if username is already taken
-    const usernameRef = ref(database, 'users/');
-    const snapshot = await get(usernameRef);
-    let isUsernameAvailable = true;
-    snapshot.forEach((childSnapshot) => {
-      if (childSnapshot.val().username === username) {
-        isUsernameAvailable = false;
+      // Check if username is already taken
+      const usernameRef = ref(database, 'users/');
+      const snapshot = await get(usernameRef);
+      let isUsernameAvailable = true;
+      snapshot.forEach((childSnapshot) => {
+        if (childSnapshot.val().username === username) {
+          isUsernameAvailable = false;
+        }
+      });
+
+      if (!isUsernameAvailable) {
+        // Generate a unique username if necessary
+        username += '_' + Date.now();
       }
-    });
 
-    if (!isUsernameAvailable) {
-      // Generate a unique username if necessary
-      username += '_' + Date.now();
+      // Save user data
+      await set(ref(database, 'users/' + user.uid), {
+        username: username,
+        email: email
+      });
+
+      showSuccess('Logged in successfully!');
+      setTimeout(() => {
+        window.location.href = 'profile/profile.html';  
+      }, 2000);
+    } else {
+      showError('No user information found.');
     }
-
-    // Save user data
-    await set(ref(database, 'users/' + user.uid), {
-      username: username,
-      email: email
-    });
-
-    showSuccess('Logged in successfully!');
-    setTimeout(() => {
-      window.location.href = 'profile/profile.html';  
-    }, 2000);
-
   } catch (error) {
-    showError('Error during Google sign-in: ' + error.message);
+    if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/popup-blocked') {
+      try {
+        await signInWithRedirect(auth, provider);
+      } catch (redirectError) {
+        showError('Error during Google sign-in: ' + redirectError.message);
+      }
+    } else {
+      showError('Error during Google sign-in: ' + error.message);
+    }
   }
 });
+
+// Handle redirect result (if coming back from redirect sign-in)
+getRedirectResult(auth)
+  .then((result) => {
+    if (result && result.user) {
+      // Save user data in the database
+      const user = result.user;
+      let username = user.displayName || user.email.split('@')[0];
+      const email = user.email;
+
+      // Check if username is already taken
+      const usernameRef = ref(database, 'users/');
+      get(usernameRef).then((snapshot) => {
+        let isUsernameAvailable = true;
+        snapshot.forEach((childSnapshot) => {
+          if (childSnapshot.val().username === username) {
+            isUsernameAvailable = false;
+          }
+        });
+
+        if (!isUsernameAvailable) {
+          // Generate a unique username if necessary
+          username += '_' + Date.now();
+        }
+
+        // Save user data
+        set(ref(database, 'users/' + user.uid), {
+          username: username,
+          email: email
+        });
+
+        showSuccess('Logged in successfully!');
+        setTimeout(() => {
+          window.location.href = 'profile/profile.html';  
+        }, 2000);
+      });
+    }
+  })
+  .catch((error) => {
+    showError('Error during Google sign-in: ' + error.message);
+  });
 
 function showError(message) {
   const errorBox = document.getElementById("error-box");
